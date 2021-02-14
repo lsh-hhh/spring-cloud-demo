@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="my.lsh.springcloud.mapper.DeptMapper">
+
+    <!--public Employee getEmployeeById(Integer id);
+
+    public int deleteEmployeeById(Integer id);
+
+    public int insertEmployee(Employee employee);
+
+    public int updateEmployee(Employee employee);-->
+
+    <select id="find" parameterType="long" resultType="my.lsh.springcloud.entity.DeptEntity">
+        select * from tbl_dept where id = #{id}
+    </select>
+
+    <select id="findAll" resultType="my.lsh.springcloud.entity.DeptEntity">
+        select * from tbl_dept
+    </select>
+
+    <insert id="add" parameterType="my.lsh.springcloud.entity.DeptEntity" useGeneratedKeys="true" keyProperty="id">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">select LAST_INSERT_ID()</selectKey>
+        insert into tbl_dept(name, data_source) values (#{name}, DATABASE())
+    </insert>
+</mapper>

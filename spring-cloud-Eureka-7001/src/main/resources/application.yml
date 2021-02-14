@@ -1,0 +1,15 @@
+server:
+  port: 7001
+spring:
+  application:
+    name: spring-cloud-Eureka-7001
+
+eureka:
+  instance:
+    hostname: eureka7001.com # localhost
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+    service-url:
+      # 单机Eureka ：defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+      defaultZone: http://eureka7002.com:7002/eureka/,http://eureka7003.com:7003/eureka/  # 集群

@@ -1,0 +1,61 @@
+server:
+  port: 8002
+
+spring:
+  datasource:
+    username: root
+    password: 123
+    url: jdbc:mysql://localhost:3306/springcloud-demo2?serverTimezone=UTC
+#    driver-class-name: org.git.mm.mysql.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+
+    druid:
+      initialSize: 5
+      minIdle: 5
+      maxActive: 20
+      maxWait: 60000
+      timeBetweenEvictionRunsMillis: 60000
+      minEvictableIdleTimeMillis: 300000
+      validationQuery: SELECT 1 FROM DUAL
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      poolPreparedStatements: true
+      #   配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+      filters: stat,wall
+      maxPoolPreparedStatementPerConnectionSize: 20
+      useGlobalDataSourceStat: true
+      connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+      #    schema:
+      #      - classpath:department.sql
+      stat-view-servlet:
+        login-username: admin
+        login-password: 123
+        url-pattern: /druid/*
+        enabled: true
+
+      web-stat-filter:
+        url-pattern: /*
+        exclusions: "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*"
+  application:
+    name: spring-cloud-dept-provider
+#    schema:
+#      - classpath:sql/department.sql
+#      - classpath:sql/employee.sql
+mybatis:
+  config-location: classpath:mybatis/mybatisConfig.xml
+  mapper-locations: classpath:mybatis/mapper/*.xml
+#debug: true
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka7001.com:7001/eureka/,http://eureka7002.com:7002/eureka/,http://eureka7003.com:7003/eureka/  # 集群
+  instance:
+    instance-id: spring-cloud-dept-provider-8002  # 指定服务的id
+    prefer-ip-address: true # 使用ip地址注册
+
+info:
+  app.name: lsh-spring-cloud-demo
+  companyname: my.lsh
+  build.artifactId: $project.artifactId$
+  build.version: $project.version$

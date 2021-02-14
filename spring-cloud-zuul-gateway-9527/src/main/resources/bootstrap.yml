@@ -1,0 +1,29 @@
+server:
+  port: 9527
+
+spring:
+  application:
+    name: spring-cloud-zuul-gateway
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka7001.com:7001/eureka/,http://eureka7002.com:7002/eureka/,http://eureka7003.com:7003/eureka/  # 集群
+  instance:
+    instance-id: spring-cloud-zuul-gateway-9527  # 指定服务的id
+    prefer-ip-address: true # 使用ip地址注册
+
+info:
+  app.name: lsh-spring-cloud-demo
+  companyname: my.lsh
+  build.artifactId: $project.artifactId$
+  build.version: $project.version$
+
+zuul:
+  routes:
+    myDept.serviceId: spring-cloud-dept-provider
+    myDept.path: /myDept/**
+  prefix: /lsh        # 访问前缀
+  ignored-services: "*" # 禁用所有微服务名称访问
+#  ignored-services:
+#    - spring-cloud-dept-provider  # 禁止使用微服务名称进行访问
